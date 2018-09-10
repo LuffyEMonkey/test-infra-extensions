@@ -13,15 +13,16 @@ mkdir -p $LOG_PATH
 gcloud auth activate-service-account --key-file=/secrets/gcs/service-account.json
 gcloud --quiet auth configure-docker
 
+go get -u github.com/golang/dep/cmd/dep
+
 src_root=`xpath "$DOCKERIZE_OPTIONS" -r ".src_root"`
 for x in `xpath "$DOCKERIZE_OPTIONS" ".refs[]"`; do
   path_alias=`xpath "$x" -r ".path_alias"`
   clone_path="$src_root/src/$path_alias"
   cd $clone_path && {
     sha=`git log -1 --format="%h"`
-    docker build -t gcr.io/devenv-205606/sebak:e2e-$sha . | tee -a $LOG_PATH/docker-build.txt
-    docker push gcr.io/devenv-205606/sebak:e2e-$sha
-    echo "gcr.io/devenv-205606/sebak:e2e-$sha" > $LOG_MOUNT_PATH/docker_image
+    dep ensure -v
+    make 2>&1 | tee -a $LOG_PATH/docker-build.txt
   }
 done
 
