@@ -160,7 +160,7 @@ func (o *Options) Run() error {
 		gcsOptions := gcsupload.Options{
 			GCSConfiguration: &kube.GCSConfiguration{
 				Bucket:       "bos-e2e-test",
-				PathStrategy: "legacy",
+				PathStrategy: "explicit",
 				DefaultOrg:   "owlchain",
 				DefaultRepo:  "sebak",
 			},
