@@ -5,7 +5,7 @@ xpath() {
   echo "$json" | jq -c $@
 }
 
-PATH=$PATH:/root/google-cloud-sdk/bin:/root/go/bin
+PATH=$PATH:/root/google-cloud-sdk/bin:$GOPATH/bin
 
 LOG_PATH=/logs/initials
 mkdir -p $LOG_PATH

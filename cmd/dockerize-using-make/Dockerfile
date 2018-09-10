@@ -1,4 +1,4 @@
-FROM gcr.io/k8s-prow/git:0.2
+FROM golang:1.10.4-alpine
 LABEL maintainer="daegeun.kim@boscoin.io"
 
 RUN apk add --no-cache \
@@ -11,15 +11,16 @@ RUN apk add --no-cache \
 	gdb \
 	gfortran \
 	git \
-	go \
 	libc-dev \
 	lsof \
+	openssh \
 	procps \
 	strace \
 	docker \
 	jq \
 	musl-dev \
-	linux-headers
+	linux-headers \
+	&& update-ca-certificates
 
 RUN curl -sSL https://sdk.cloud.google.com | bash
 
